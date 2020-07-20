@@ -26,3 +26,9 @@ System-Generated Headers and Content Sniffing
     ```go
     w.Header().Set("Content-Type", "application/json")
     ```
+
+Useful Code Repository Structure
+- reference [here](https://peter.bourgon.org/go-best-practices-2016/#repository-structure).
+- `cmd` directory contains application-specific `Go` code.
+- `pkg` directory contains non-application-specific and reusable `Go` code.
+- `ui` directory contains user-interface assets, e.g. HTML templates, static assets like CSS and images.

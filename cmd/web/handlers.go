@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"strconv"
 )
@@ -32,17 +31,4 @@ func createGist(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.Write([]byte("Create a new gist..."))
-}
-
-func main() {
-	// Start a new web server and register functions as handlers for respective URL patterns.
-	mux := http.NewServeMux()
-	mux.HandleFunc("/", home)
-	mux.HandleFunc("/gist", showGist)
-	mux.HandleFunc("/gists/create", createGist)
-
-	log.Println("Starting server on :4000")
-
-	err := http.ListenAndServe(":4000", mux)
-	log.Fatal(err)
 }
