@@ -5,18 +5,24 @@ import (
 	"net/http"
 )
 
-// Define a home handler function which writes a byte slice containing
-// "Hello from GiGists" as the response body.
-
 func home(w http.ResponseWriter, _ *http.Request) {
 	w.Write([]byte("Hello from GoGists"))
 }
 
+func showGist(w http.ResponseWriter, _ *http.Request) {
+	w.Write([]byte("Display a specific gist..."))
+}
+
+func createGist(w http.ResponseWriter, _ *http.Request) {
+	w.Write([]byte("Create a new gist..."))
+}
+
 func main() {
-	// Start a new web server
-	// Register the home function as the handler for the "/" URL pattern.
+	// Start a new web server and register functions as handlers for respective URL patterns.
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", home)
+	mux.HandleFunc("/gist", showGist)
+	mux.HandleFunc("/gists/create", createGist)
 
 	log.Println("Starting server on :4000")
 
