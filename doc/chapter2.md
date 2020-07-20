@@ -32,3 +32,5 @@ Useful Code Repository Structure
 - `cmd` directory contains application-specific `Go` code.
 - `pkg` directory contains non-application-specific and reusable `Go` code.
 - `ui` directory contains user-interface assets, e.g. HTML templates, static assets like CSS and images.
+  - Convention: Use `<name>.<role>.tmpl` for template files, where `<role>` is either `page`, `partial` or `layout`.
+- Go’s `html/template` package provides a family of functions for safely parsing and rendering HTML templates.
