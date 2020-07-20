@@ -9,9 +9,9 @@ Fixed URL Path vs Subtree Patterns
 
 DefaultServeMux
 - `net/http` provides a default servemux as a global variable:
-  ```
-  var DefaultServeMux = NewServeMux()
-  ```
+    ```go
+    var DefaultServeMux = NewServeMux()
+    ```
 
 Customizing HTTP Headers
 - `w.WriteHeader()` can only be called once per response, and cannot be changed after status code has been written.
@@ -19,3 +19,10 @@ Customizing HTTP Headers
 - Use `w.Header().Set()` method to add new headers to the response header map.
 - Changing the response header map after a call to `w.WriteHeader()` or `w.Write()` will have no effect.
 - Use the `http.Error` shortcut to call `w.WriteHeader()` and `w.Write()` methods.
+
+System-Generated Headers and Content Sniffing
+- When sending a response, Go will automatically set three system-generated headers: `Date`, `Content-Length` and `Content-Type`.
+- Go will attempt to set the `Content-Type` header by using the `http.DetectContentType()` function, but it cannot distinguish JSON from plain text. To set the correct header manually:
+    ```go
+    w.Header().Set("Content-Type", "application/json")
+    ```
