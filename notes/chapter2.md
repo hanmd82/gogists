@@ -18,3 +18,4 @@ Customizing HTTP Headers
 - The first call to `w.Write()` will automatically send a `200 OK` status code. To send a non-`200` status code, call `w.WriteHeader()` before any call to `w.Write()`.
 - Use `w.Header().Set()` method to add new headers to the response header map.
 - Changing the response header map after a call to `w.WriteHeader()` or `w.Write()` will have no effect.
+- Use the `http.Error` shortcut to call `w.WriteHeader()` and `w.Write()` methods.

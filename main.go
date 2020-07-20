@@ -20,8 +20,7 @@ func showGist(w http.ResponseWriter, _ *http.Request) {
 func createGist(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		w.Header().Set("Allow", http.MethodPost)
-		w.WriteHeader(http.StatusMethodNotAllowed) // 405
-		w.Write([]byte("Method Not Allowed"))
+		http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed) // 405
 		return
 	}
 	w.Write([]byte("Create a new gist..."))
