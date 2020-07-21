@@ -34,3 +34,6 @@ Useful Code Repository Structure
 - `ui` directory contains user-interface assets, e.g. HTML templates, static assets like CSS and images.
   - Convention: Use `<name>.<role>.tmpl` for template files, where `<role>` is either `page`, `partial` or `layout`.
 - Go’s `html/template` package provides a family of functions for safely parsing and rendering HTML templates.
+
+Serving Static Files
+- Go’s `net/http` package ships with a built-in `http.FileServer` handler which can be used to serve files over HTTP from a specific directory.
