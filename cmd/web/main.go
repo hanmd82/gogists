@@ -25,19 +25,10 @@ func main() {
 		infoLog:  infoLog,
 	}
 
-	// Start a new web server and register functions as handlers for respective URL patterns.
-	mux := http.NewServeMux()
-	mux.HandleFunc("/", app.home)
-	mux.HandleFunc("/gist", app.showGist)
-	mux.HandleFunc("/gists/create", app.createGist)
-
-	fileServer := http.FileServer(http.Dir("./ui/static/"))
-	mux.Handle("/static/", http.StripPrefix("/static", fileServer))
-
 	srv := &http.Server{
 		Addr:     *addr,
 		ErrorLog: errorLog,
-		Handler:  mux,
+		Handler:  app.routes(),
 	}
 	infoLog.Printf("Starting server on %s", *addr)
 
