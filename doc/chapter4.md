@@ -1,10 +1,11 @@
-Database-Driven Responses using PostgreSQL
+## Database-Driven Responses
 
+### Setting up PostgreSQL
 Create `gogists` database, and `gists` table with index on `created_at` field
 ```sql
-postgres=# CREATE DATABASE gogists ENCODING UTF8;
-postgres=# \c gogists
-// You are now connected to database "gogists" as user "mhan".
+CREATE DATABASE gogists ENCODING UTF8;
+\c gogists
+-- You are now connected to database "gogists" as user "mhan".
 
 CREATE TABLE gists (
   id SERIAL NOT NULL PRIMARY KEY,
@@ -16,7 +17,8 @@ CREATE TABLE gists (
 
 CREATE INDEX idx_gists_created_at ON gists(created_at);
 
-gogists=# \d gists
+\d gists
+/*
                                         Table "public.gists"
    Column   |            Type             | Collation | Nullable |              Default
 ------------+-----------------------------+-----------+----------+-----------------------------------
@@ -28,6 +30,7 @@ gogists=# \d gists
 Indexes:
     "gists_pkey" PRIMARY KEY, btree (id)
     "idx_gists_created_at" btree (created_at)
+*/
 ```
 
 Seed example data
@@ -59,28 +62,31 @@ Create new user `web` and grant access to `gists` table
 CREATE USER web WITH PASSWORD '******';
 GRANT SELECT,INSERT,UPDATE ON gists TO web;
 
-gogists=# \dp
+\dp
+/*
                                   Access privileges
  Schema |     Name     |   Type   | Access privileges | Column privileges | Policies
 --------+--------------+----------+-------------------+-------------------+----------
  public | gists        | table    | mhan=arwdDxt/mhan+|                   |
         |              |          | web=arw/mhan      |                   |
  public | gists_id_seq | sequence |                   |                   |
-
+*/
 ```
 
 Verify permissions of user `web`
 ```sql
 $ psql -U web -d gogists
 
-gogists=> SELECT id, title, expires_at FROM gists;
+SELECT id, title, expires_at FROM gists;
+/*
  id |         title          |         expires_at
 ----+------------------------+----------------------------
   1 | An old silent pond     | 2021-07-22 14:37:34.155904
   2 | Over the wintry forest | 2021-07-22 14:37:43.446104
   3 | First autumn morning   | 2020-07-29 14:37:49.932896
 (3 rows)
+*/
 
-gogists=> DROP TABLE gists;
-ERROR:  must be owner of table gists
+DROP TABLE gists;
+-- ERROR:  must be owner of table gists
 ```
