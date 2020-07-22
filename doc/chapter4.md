@@ -90,3 +90,12 @@ SELECT id, title, expires_at FROM gists;
 DROP TABLE gists;
 -- ERROR:  must be owner of table gists
 ```
+
+---
+### Installing a Database Driver
+
+Reference: https://www.calhoun.io/connecting-to-a-postgresql-database-with-gos-database-sql-package/
+
+```
+go get -u github.com/lib/pq
+```
