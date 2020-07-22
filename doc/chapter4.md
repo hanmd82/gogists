@@ -99,3 +99,9 @@ Reference: https://www.calhoun.io/connecting-to-a-postgresql-database-with-gos-d
 ```
 go get -u github.com/lib/pq
 ```
+
+---
+### Creating a Database Connection Pool
+
+- `sql.Open()` doesn’t actually create any connections - it just initializes the connection pool for future use. Actual connections to the database are established lazily.
+- use `db.Ping()` to create a connection and check for any errors.
