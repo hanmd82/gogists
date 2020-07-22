@@ -5,3 +5,5 @@
     ```bash
     $ go run ./cmd/web >>/tmp/info.log 2>>/tmp/error.log
     ```
+- By default, Go’s HTTP server logs errors using the standard logger.
+- Custom loggers created by `log.New()` are concurrency-safe.
