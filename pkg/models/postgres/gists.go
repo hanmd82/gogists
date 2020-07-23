@@ -2,6 +2,7 @@ package postgres
 
 import (
 	"database/sql"
+	"errors"
 
 	"github.com/hanmd82/gogists/pkg/models"
 )
@@ -26,7 +27,23 @@ func (m *GistModel) Insert(title, content, expiresInDays string) (int, error) {
 }
 
 func (m *GistModel) Get(id int) (*models.Gist, error) {
-	return nil, nil
+	sqlStatement := `
+		SELECT id, title, content, created_at, expires_at FROM gists
+		WHERE expires_at > now() at time zone 'utc' AND id = $1`
+	row := m.DB.QueryRow(sqlStatement, id)
+
+	gist := &models.Gist{}
+	// Copy the values from each field in sql.Row to the corresponding field in the Gist struct
+	err := row.Scan(&gist.ID, &gist.Title, &gist.Content, &gist.CreatedAt, &gist.ExpiresAt)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, models.ErrNoRecord
+		} else {
+			return nil, err
+		}
+	}
+
+	return gist, nil
 }
 
 func (m* GistModel) Latest() ([]*models.Gist, error) {

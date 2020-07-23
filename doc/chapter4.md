@@ -115,3 +115,4 @@ go get -u github.com/lib/pq
 - https://www.calhoun.io/inserting-records-into-a-postgresql-database-with-gos-database-sql-package/
 - https://stackoverflow.com/a/9325195
 - Send a `HTTP POST` request which triggers `createGist` handler, which in turn calls `GistModel.Insert()` method.
+- https://www.calhoun.io/querying-for-a-single-record-using-gos-database-sql-package/
