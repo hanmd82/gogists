@@ -61,6 +61,7 @@ Create new user `web` and grant access to `gists` table
 ```sql
 CREATE USER web WITH PASSWORD '******';
 GRANT SELECT,INSERT,UPDATE ON gists TO web;
+GRANT USAGE, SELECT ON SEQUENCE gists_id_seq TO web;
 
 \dp
 /*
@@ -69,7 +70,8 @@ GRANT SELECT,INSERT,UPDATE ON gists TO web;
 --------+--------------+----------+-------------------+-------------------+----------
  public | gists        | table    | mhan=arwdDxt/mhan+|                   |
         |              |          | web=arw/mhan      |                   |
- public | gists_id_seq | sequence |                   |                   |
+ public | gists_id_seq | sequence | mhan=rwU/mhan    +|                   |
+        |              |          | web=rU/mhan       |                   |
 */
 ```
 
@@ -110,3 +112,6 @@ go get -u github.com/lib/pq
 ### Designing a Database Model
 
 - Establish a new `GistModel` struct in `main()` and then inject it as a dependency via the `application` struct.
+- https://www.calhoun.io/inserting-records-into-a-postgresql-database-with-gos-database-sql-package/
+- https://stackoverflow.com/a/9325195
+- Send a `HTTP POST` request which triggers `createGist` handler, which in turn calls `GistModel.Insert()` method.

@@ -48,5 +48,16 @@ func (app *application) createGist(w http.ResponseWriter, r *http.Request) {
 		app.clientError(w, http.StatusMethodNotAllowed) // 405
 		return
 	}
-	w.Write([]byte("Create a new gist..."))
+
+	title := "O snail"
+	content := "O snail\nClimb Mount Fuji,\nBut slowly, slowly!\n\n– Kobayashi Issa"
+	expiresInDays := "7"
+
+	id, err := app.gists.Insert(title, content, expiresInDays)
+	if err != nil {
+		app.serverError(w, err)
+		return
+	}
+
+	http.Redirect(w, r, fmt.Sprintf("/gist?id=%d", id), http.StatusSeeOther) // 303
 }

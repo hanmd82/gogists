@@ -10,8 +10,19 @@ type GistModel struct {
 	DB *sql.DB
 }
 
-func (m *GistModel) Insert(title, content, expiresAt string) (int, error) {
-	return 0, nil
+func (m *GistModel) Insert(title, content, expiresInDays string) (int, error) {
+	sqlStatement := `
+		INSERT INTO gists (title, content, created_at, expires_at)
+		VALUES ($1, $2, now() at time zone 'utc', now() at time zone 'utc' + $3 * INTERVAL '1 day')
+		RETURNING id`
+
+	var id int
+	err := m.DB.QueryRow(sqlStatement, title, content, expiresInDays).Scan(&id)
+	if err != nil {
+		return 0, err
+	}
+
+	return id, nil
 }
 
 func (m *GistModel) Get(id int) (*models.Gist, error) {
