@@ -105,3 +105,8 @@ go get -u github.com/lib/pq
 
 - `sql.Open()` doesn’t actually create any connections - it just initializes the connection pool for future use. Actual connections to the database are established lazily.
 - use `db.Ping()` to create a connection and check for any errors.
+
+---
+### Designing a Database Model
+
+- Establish a new `GistModel` struct in `main()` and then inject it as a dependency via the `application` struct.

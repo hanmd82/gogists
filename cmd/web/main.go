@@ -8,6 +8,8 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/hanmd82/gogists/pkg/models/postgres"
+
 	_ "github.com/lib/pq"
 )
 
@@ -23,6 +25,7 @@ const (
 type application struct {
 	errorLog *log.Logger
 	infoLog  *log.Logger
+	gists    *postgres.GistModel
 }
 
 func main() {
@@ -43,6 +46,7 @@ func main() {
 	app := &application{
 		errorLog: errorLog,
 		infoLog:  infoLog,
+		gists:    &postgres.GistModel{DB: db},
 	}
 
 	srv := &http.Server{
