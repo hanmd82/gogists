@@ -116,3 +116,5 @@ go get -u github.com/lib/pq
 - https://stackoverflow.com/a/9325195
 - Send a `HTTP POST` request which triggers `createGist` handler, which in turn calls `GistModel.Insert()` method.
 - https://www.calhoun.io/querying-for-a-single-record-using-gos-database-sql-package/
+- As long as a result set is open, it will keep the underlying database connection open.
+- https://www.calhoun.io/querying-for-multiple-records-with-gos-sql-package/

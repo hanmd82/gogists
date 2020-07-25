@@ -3,7 +3,6 @@ package main
 import (
 	"errors"
 	"fmt"
-	"html/template"
 	"net/http"
 	"strconv"
 
@@ -16,23 +15,33 @@ func (app *application) home(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	files := []string{
-		"./ui/html/home.page.tmpl",
-		"./ui/html/base.layout.tmpl",
-		"./ui/html/footer.partial.tmpl",
-	}
-
-	// Read the template files into a template set
-	ts, err := template.ParseFiles(files...)
+	gists, err := app.gists.Latest()
 	if err != nil {
 		app.serverError(w, err)
 		return
 	}
 
-	err = ts.Execute(w, nil)
-	if err != nil {
-		app.serverError(w, err)
+	for _, g := range gists {
+		fmt.Fprintf(w, "%v\n", g)
 	}
+
+	//files := []string{
+	//	"./ui/html/home.page.tmpl",
+	//	"./ui/html/base.layout.tmpl",
+	//	"./ui/html/footer.partial.tmpl",
+	//}
+	//
+	//// Read the template files into a template set
+	//ts, err := template.ParseFiles(files...)
+	//if err != nil {
+	//	app.serverError(w, err)
+	//	return
+	//}
+	//
+	//err = ts.Execute(w, nil)
+	//if err != nil {
+	//	app.serverError(w, err)
+	//}
 }
 
 func (app *application) showGist(w http.ResponseWriter, r *http.Request) {
