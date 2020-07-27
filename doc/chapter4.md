@@ -37,21 +37,21 @@ Seed example data
 ```sql
 INSERT INTO gists (title, content, created_at, expires_at) VALUES (
     'An old silent pond',
-    'An old silent pond...\nA frog jumps into the pond,\nsplash! Silence again.\n\n– Matsuo Bashō',
+    E'An old silent pond...\nA frog jumps into the pond,\nsplash! Silence again.\n\n– Matsuo Bashō',
     now() at time zone 'utc',
     now() at time zone 'utc' + 365 * INTERVAL '1 day'
 );
 
 INSERT INTO gists (title, content, created_at, expires_at) VALUES (
     'Over the wintry forest',
-    'Over the wintry\nforest, winds howl in rage\nwith no leaves to blow.\n\n– Natsume Soseki',
+    E'Over the wintry\nforest, winds howl in rage\nwith no leaves to blow.\n\n– Natsume Soseki',
     now() at time zone 'utc',
     now() at time zone 'utc' + 365 * INTERVAL '1 day'
 );
 
 INSERT INTO gists (title, content, created_at, expires_at) VALUES (
     'First autumn morning',
-    'First autumn morning\nthe mirror I stare into\nshows my father''s face.\n\n– Murakami Kijo',
+    E'First autumn morning\nthe mirror I stare into\nshows my father''s face.\n\n– Murakami Kijo',
     now() at time zone 'utc',
     now() at time zone 'utc' + 7 * INTERVAL '1 day'
 );
