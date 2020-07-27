@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"flag"
 	"fmt"
+	"html/template"
 	"log"
 	"net/http"
 	"os"
@@ -23,9 +24,10 @@ const (
 
 // application struct holds the application-wide dependencies
 type application struct {
-	errorLog *log.Logger
-	infoLog  *log.Logger
-	gists    *postgres.GistModel
+	errorLog      *log.Logger
+	infoLog       *log.Logger
+	gists         *postgres.GistModel
+	templateCache map[string]*template.Template
 }
 
 func main() {
@@ -43,10 +45,16 @@ func main() {
 	}
 	defer db.Close()
 
+	templateCache, err := newTemplateCache("./ui/html/")
+	if err != nil {
+		errorLog.Fatal(err)
+	}
+
 	app := &application{
-		errorLog: errorLog,
-		infoLog:  infoLog,
-		gists:    &postgres.GistModel{DB: db},
+		errorLog:      errorLog,
+		infoLog:       infoLog,
+		gists:         &postgres.GistModel{DB: db},
+		templateCache: templateCache,
 	}
 
 	srv := &http.Server{
