@@ -3,15 +3,17 @@
 {{define "title"}}Gist #{{.Gist.ID}}{{end}}
 
 {{define "main"}}
-<div class="snippet">
-    <div class="metadata">
-        <strong>{{.Gist.Title}}</strong>
-        <span>#{{.Gist.ID}}</span>
+    {{with .Gist}}
+    <div class="snippet">
+        <div class="metadata">
+            <strong>{{.Title}}</strong>
+            <span>#{{.ID}}</span>
+        </div>
+        <pre><code>{{.Content}}</code></pre>
+        <div class="metadata">
+            <time>Created At: {{.CreatedAt}}</time>
+            <time>Expires At: {{.ExpiresAt}}</time>
+        </div>
     </div>
-    <pre><code>{{.Gist.Content}}</code></pre>
-    <div class="metadata">
-        <time>Created At: {{.Gist.CreatedAt}}</time>
-        <time>Expires At: {{.Gist.ExpiresAt}}</time>
-    </div>
-</div>
+    {{end}}
 {{end}}
