@@ -22,27 +22,25 @@ func (app *application) home(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	for _, g := range gists {
-		fmt.Fprintf(w, "%v\n", g)
+	data := &templateData{Gists: gists}
+
+	files := []string{
+		"./ui/html/home.page.tmpl",
+		"./ui/html/base.layout.tmpl",
+		"./ui/html/footer.partial.tmpl",
 	}
 
-	//files := []string{
-	//	"./ui/html/home.page.tmpl",
-	//	"./ui/html/base.layout.tmpl",
-	//	"./ui/html/footer.partial.tmpl",
-	//}
-	//
-	//// Read the template files into a template set
-	//ts, err := template.ParseFiles(files...)
-	//if err != nil {
-	//	app.serverError(w, err)
-	//	return
-	//}
-	//
-	//err = ts.Execute(w, nil)
-	//if err != nil {
-	//	app.serverError(w, err)
-	//}
+	// Read the template files into a template set
+	ts, err := template.ParseFiles(files...)
+	if err != nil {
+		app.serverError(w, err)
+		return
+	}
+
+	err = ts.Execute(w, data)
+	if err != nil {
+		app.serverError(w, err)
+	}
 }
 
 func (app *application) showGist(w http.ResponseWriter, r *http.Request) {
