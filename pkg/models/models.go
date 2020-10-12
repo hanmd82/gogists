@@ -14,3 +14,7 @@ type Gist struct {
 	CreatedAt time.Time
 	ExpiresAt time.Time
 }
+
+func (g Gist) FormatTime(t time.Time) string {
+	return t.Format(time.RFC822)
+}

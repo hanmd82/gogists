@@ -23,3 +23,9 @@ Some Template Functions - see [here](https://golang.org/pkg/text/template/#hdr-F
 - `{{printf}}`
 - `{{len}}`
 - `{{$bar := len .Foo}}` (declaration of template variable, and assignment operator)
+
+---
+
+Other References:
+- Time-formatting: https://yourbasic.org/golang/format-parse-string-time-date-example/
+- Using Functions inside Go templates: https://www.calhoun.io/intro-to-templates-p3-functions/
