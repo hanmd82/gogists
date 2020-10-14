@@ -3,6 +3,7 @@ package main
 import (
 	"html/template"
 	"path/filepath"
+	"time"
 
 	"github.com/hanmd82/gogists/pkg/models"
 )
@@ -11,6 +12,14 @@ type templateData struct {
 	CurrentYear int
 	Gist        *models.Gist
 	Gists       []*models.Gist
+}
+
+func formatDateTime(t time.Time) string {
+	return t.Format(time.RFC822)
+}
+
+var functions = template.FuncMap{
+	"formatDateTime": formatDateTime,
 }
 
 func newTemplateCache(dir string) (map[string]*template.Template, error) {
@@ -25,7 +34,8 @@ func newTemplateCache(dir string) (map[string]*template.Template, error) {
 	for _, page := range pages {
 		name := filepath.Base(page)
 
-		ts, err := template.ParseFiles(page)
+		// Create an empty template set, register functions in template.FuncMap, then parse the file
+		ts, err := template.New(name).Funcs(functions).ParseFiles(page)
 		if err != nil {
 			return nil, err
 		}

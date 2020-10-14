@@ -35,6 +35,8 @@ Error Handling
 
 Template Data Injection using helper methods on `application` struct
 
+Create custom template functions using `template.FuncMap`
+
 ---
 
 Other References:
