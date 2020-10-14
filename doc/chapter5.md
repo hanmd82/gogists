@@ -32,6 +32,9 @@ Error Handling
   - write template into a buffer. If this fails, send HTTP response with error message
   - if this succeeds, write the contents of buffer to `http.ResponseWriter`
 
+
+Template Data Injection using helper methods on `application` struct
+
 ---
 
 Other References:
