@@ -24,6 +24,14 @@ Some Template Functions - see [here](https://golang.org/pkg/text/template/#hdr-F
 - `{{len}}`
 - `{{$bar := len .Foo}}` (declaration of template variable, and assignment operator)
 
+
+---
+
+Error Handling
+- make template rendering a two-phase process:
+  - write template into a buffer. If this fails, send HTTP response with error message
+  - if this succeeds, write the contents of buffer to `http.ResponseWriter`
+
 ---
 
 Other References:
