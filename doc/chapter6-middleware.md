@@ -34,3 +34,12 @@ Position of the middleware function in the chain of handlers affects the behavio
     ```
     servemux -> myMiddleware -> application handler
     ```
+
+### Flow of Control
+In any middleware handler, code which comes before `next.ServeHTTP()` will be executed on the way down the chain, and any code after `next.ServeHTTP()` - or in a deferred function - will be executed on the way back up.
+
+### Early Returns
+
+If `return` is called in middleware function before calling `next.ServeHTTP()`, then the chain will stop being executed and control will flow back upstream.
+
+A common use-case is in authentication middleware.
