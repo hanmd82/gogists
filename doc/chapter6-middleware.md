@@ -46,4 +46,8 @@ A common use-case is in authentication middleware.
 
 --------------------------------------------------
 
-Middleware functions can be created as methods on structs, to enable access to HTTP handler dependencies
+Middleware functions can be created as methods on structs, to enable access to HTTP handler dependencies.
+
+Deferred functions are always called when the stack is being unwound following a panic. Use the built-in `recover` function to check whether there has been a panic.
+
+If spinning up additional goroutines, make sure to recover any panics from within those.
