@@ -48,12 +48,6 @@ func (app *application) createGistForm(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) createGist(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodPost {
-		w.Header().Set("Allow", http.MethodPost)
-		app.clientError(w, http.StatusMethodNotAllowed) // 405
-		return
-	}
-
 	title := "O snail"
 	content := "O snail\nClimb Mount Fuji,\nBut slowly, slowly!\n\n– Kobayashi Issa"
 	expiresInDays := "7"
@@ -64,5 +58,5 @@ func (app *application) createGist(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	http.Redirect(w, r, fmt.Sprintf("/gist?id=%d", id), http.StatusSeeOther) // 303
+	http.Redirect(w, r, fmt.Sprintf("/gist/%d", id), http.StatusSeeOther) // 303
 }
