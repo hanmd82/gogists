@@ -43,3 +43,7 @@ In any middleware handler, code which comes before `next.ServeHTTP()` will be ex
 If `return` is called in middleware function before calling `next.ServeHTTP()`, then the chain will stop being executed and control will flow back upstream.
 
 A common use-case is in authentication middleware.
+
+--------------------------------------------------
+
+Middleware functions can be created as methods on structs, to enable access to HTTP handler dependencies
