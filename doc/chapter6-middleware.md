@@ -51,3 +51,5 @@ Middleware functions can be created as methods on structs, to enable access to H
 Deferred functions are always called when the stack is being unwound following a panic. Use the built-in `recover` function to check whether there has been a panic.
 
 If spinning up additional goroutines, make sure to recover any panics from within those.
+
+Composable and Reusable Middleware Chains: Package `justinas/alice` can help manage middleware/handler chains, make them look more readable, and can be assigned to variables, appended to, and reused.
