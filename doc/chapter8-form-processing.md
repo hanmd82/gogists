@@ -20,3 +20,5 @@ Notes
         fmt.Fprintf(w, "%d: Item %s\n", i, item)
     }
     ```
+- use `FormErrors` to hold any validation errors and `FormData` to hold any previously submitted data
+- when there are any validation errors, re-display the `create.page.tmpl` template, passing in the map of errors in the `FormErrors` field of the template data, and passing in the previously submitted data in the `FormData` field
