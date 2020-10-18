@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
+	"strings"
+	"unicode/utf8"
 
 	"github.com/hanmd82/gogists/pkg/models"
 )
@@ -57,6 +59,29 @@ func (app *application) createGist(w http.ResponseWriter, r *http.Request) {
 	title := r.PostForm.Get("title")
 	content := r.PostForm.Get("content")
 	expiresInDays := r.PostForm.Get("expires_in_days")
+
+	errors := make(map[string]string)
+
+	if strings.TrimSpace(title) == "" {
+		errors["title"] = "This field cannot be blank"
+	} else if utf8.RuneCountInString(title) > 100 {
+		errors["title"] = "This field is too long (maximum is 100 characters)"
+	}
+
+	if strings.TrimSpace(content) == "" {
+		errors["content"] = "This field cannot be blank"
+	}
+
+	if strings.TrimSpace(expiresInDays) == "" {
+		errors["expiresInDays"] = "This field cannot be blank"
+	} else if expiresInDays != "365" && expiresInDays != "7" && expiresInDays != "1" {
+		errors["expiresInDays"] = "This field is invalid"
+	}
+
+	if len(errors) > 0 {
+		fmt.Fprint(w, errors)
+		return
+	}
 
 	id, err := app.gists.Insert(title, content, expiresInDays)
 	if err != nil {
