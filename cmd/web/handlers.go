@@ -48,9 +48,15 @@ func (app *application) createGistForm(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) createGist(w http.ResponseWriter, r *http.Request) {
-	title := "O snail"
-	content := "O snail\nClimb Mount Fuji,\nBut slowly, slowly!\n\n– Kobayashi Issa"
-	expiresInDays := "7"
+	err := r.ParseForm()
+	if err != nil {
+		app.clientError(w, http.StatusBadRequest) // 400
+		return
+	}
+
+	title := r.PostForm.Get("title")
+	content := r.PostForm.Get("content")
+	expiresInDays := r.PostForm.Get("expires_in_days")
 
 	id, err := app.gists.Insert(title, content, expiresInDays)
 	if err != nil {
