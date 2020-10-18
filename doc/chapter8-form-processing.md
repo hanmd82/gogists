@@ -22,3 +22,9 @@ Notes
     ```
 - use `FormErrors` to hold any validation errors and `FormData` to hold any previously submitted data
 - when there are any validation errors, re-display the `create.page.tmpl` template, passing in the map of errors in the `FormErrors` field of the template data, and passing in the previously submitted data in the `FormData` field
+
+---
+
+- Refactor into `forms` package, which contains validation rules and logic that can be reused across the application
+- Form data and errors are neatly encapsulated in a single `forms.Form` object, which can be passed to templates
+- Provides a simple and consistent API for retrieving and displaying both the form data and any error messages

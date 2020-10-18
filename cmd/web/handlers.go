@@ -5,9 +5,8 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
-	"strings"
-	"unicode/utf8"
 
+	"github.com/hanmd82/gogists/pkg/forms"
 	"github.com/hanmd82/gogists/pkg/models"
 )
 
@@ -46,7 +45,9 @@ func (app *application) showGist(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) createGistForm(w http.ResponseWriter, r *http.Request) {
-	app.render(w, r, "create.page.tmpl", nil)
+	app.render(w, r, "create.page.tmpl", &templateData{
+		Form: forms.New(nil),
+	})
 }
 
 func (app *application) createGist(w http.ResponseWriter, r *http.Request) {
@@ -56,37 +57,17 @@ func (app *application) createGist(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	title := r.PostForm.Get("title")
-	content := r.PostForm.Get("content")
-	expiresInDays := r.PostForm.Get("expires_in_days")
+	form := forms.New(r.PostForm)
+	form.Required("title", "content", "expires_in_days")
+	form.MaxLength("title", 100)
+	form.PermittedValues("expires_in_days", "365", "7", "1")
 
-	errors := make(map[string]string)
-
-	if strings.TrimSpace(title) == "" {
-		errors["title"] = "This field cannot be blank"
-	} else if utf8.RuneCountInString(title) > 100 {
-		errors["title"] = "This field is too long (maximum is 100 characters)"
-	}
-
-	if strings.TrimSpace(content) == "" {
-		errors["content"] = "This field cannot be blank"
-	}
-
-	if strings.TrimSpace(expiresInDays) == "" {
-		errors["expires_in_days"] = "This field cannot be blank"
-	} else if expiresInDays != "365" && expiresInDays != "7" && expiresInDays != "1" {
-		errors["expires_in_days"] = "This field is invalid"
-	}
-
-	if len(errors) > 0 {
-		app.render(w, r, "create.page.tmpl", &templateData{
-			FormErrors: errors,
-			FormData:   r.PostForm,
-		})
+	if !form.Valid() {
+		app.render(w, r, "create.page.tmpl", &templateData{Form: form})
 		return
 	}
 
-	id, err := app.gists.Insert(title, content, expiresInDays)
+	id, err := app.gists.Insert(form.Get("title"), form.Get("content"), form.Get("expires_in_days"))
 	if err != nil {
 		app.serverError(w, err)
 		return
