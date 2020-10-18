@@ -73,9 +73,9 @@ func (app *application) createGist(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if strings.TrimSpace(expiresInDays) == "" {
-		errors["expiresInDays"] = "This field cannot be blank"
+		errors["expires_in_days"] = "This field cannot be blank"
 	} else if expiresInDays != "365" && expiresInDays != "7" && expiresInDays != "1" {
-		errors["expiresInDays"] = "This field is invalid"
+		errors["expires_in_days"] = "This field is invalid"
 	}
 
 	if len(errors) > 0 {
