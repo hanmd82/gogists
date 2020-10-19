@@ -8,3 +8,8 @@ Goals
 
 ---
 
+Setting Up the Session Manager
+- Establish a session manager and make it available to handlers via the `application` struct
+- Define a 32-byte secret key for encrypting and authenticating session cookies
+- Wrap application routes with the middleware provided by the `Session.Enable()` method. This middleware loads and saves session data to and from the session cookie with every HTTP request and response
+  - Create a new middleware chain containing the middleware specific to the dynamic application routes
