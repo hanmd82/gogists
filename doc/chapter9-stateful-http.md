@@ -13,3 +13,8 @@ Setting Up the Session Manager
 - Define a 32-byte secret key for encrypting and authenticating session cookies
 - Wrap application routes with the middleware provided by the `Session.Enable()` method. This middleware loads and saves session data to and from the session cookie with every HTTP request and response
   - Create a new middleware chain containing the middleware specific to the dynamic application routes
+
+Working with Session Data
+- use `*Session.Put()` to add data to session, with a specified key
+- use `*Session.Get()` to retrieve data from the session, with the given key
+- use `*Session.PopString()` to remove data from session after reading

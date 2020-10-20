@@ -39,8 +39,11 @@ func (app *application) showGist(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	flash := app.session.PopString(r, "flash")
+
 	app.render(w, r, "show.page.tmpl", &templateData{
-		Gist: gist,
+		Flash: flash,
+		Gist:  gist,
 	})
 }
 
@@ -72,6 +75,8 @@ func (app *application) createGist(w http.ResponseWriter, r *http.Request) {
 		app.serverError(w, err)
 		return
 	}
+
+	app.session.Put(r, "flash", "Gist successfully created!")
 
 	http.Redirect(w, r, fmt.Sprintf("/gist/%d", id), http.StatusSeeOther) // 303
 }
