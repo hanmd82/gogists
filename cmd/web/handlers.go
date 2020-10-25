@@ -40,7 +40,7 @@ func (app *application) showGist(w http.ResponseWriter, r *http.Request) {
 	}
 
 	app.render(w, r, "show.page.tmpl", &templateData{
-		Gist:  gist,
+		Gist: gist,
 	})
 }
 
