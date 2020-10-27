@@ -46,7 +46,7 @@ func (m *GistModel) Get(id int) (*models.Gist, error) {
 	return gist, nil
 }
 
-func (m* GistModel) Latest() ([]*models.Gist, error) {
+func (m *GistModel) Latest() ([]*models.Gist, error) {
 	sqlStatement := `
 		SELECT id, title, content, created_at, expires_at FROM gists
 		WHERE expires_at > now() at time zone 'utc' ORDER BY created_at	DESC LIMIT 10`

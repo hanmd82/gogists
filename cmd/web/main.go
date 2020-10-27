@@ -32,6 +32,7 @@ type application struct {
 	session       *sessions.Session
 	gists         *postgres.GistModel
 	templateCache map[string]*template.Template
+	users         *postgres.UserModel
 }
 
 func main() {
@@ -65,6 +66,7 @@ func main() {
 		session:       session,
 		gists:         &postgres.GistModel{DB: db},
 		templateCache: templateCache,
+		users:         &postgres.UserModel{DB: db},
 	}
 
 	tlsConfig := &tls.Config{
