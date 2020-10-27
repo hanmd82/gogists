@@ -39,4 +39,10 @@ Indexes:
     "users_pkey" PRIMARY KEY, btree (id)
     "users_uc_email" UNIQUE CONSTRAINT, btree (email)
 */
+
+Grant access to `users` table
+```sql
+\dp
+GRANT SELECT,INSERT,UPDATE ON users TO web;
+GRANT USAGE, SELECT ON SEQUENCE users_id_seq TO web;
 ```
