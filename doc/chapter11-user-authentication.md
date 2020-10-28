@@ -54,3 +54,13 @@ User flows:
 - Login
 - Logout
 - User Authorization
+
+---
+
+### CSRF Protection
+
+- https://www.gnucitizen.org/blog/csrf-demystified/
+- https://stackoverflow.com/questions/6412813/do-login-forms-need-tokens-against-csrf-attacks
+- one way to prevent CSRF attacks is to make sure that the `SameSite` attribute is set on session cookie - `SameSite=Strict`
+- Token-based Mitigation: https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#Double_Submit_Cookie
+  - To make form submissions work, use `nosurf.Token()` to get the CSRF token and add it to a hidden `csrf_token` field in each form
