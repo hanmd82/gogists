@@ -10,11 +10,12 @@ import (
 )
 
 type templateData struct {
-	CurrentYear int
-	Flash       string
-	Form        *forms.Form
-	Gist        *models.Gist
-	Gists       []*models.Gist
+	CurrentYear     int
+	Flash           string
+	Form            *forms.Form
+	IsAuthenticated bool
+	Gist            *models.Gist
+	Gists           []*models.Gist
 }
 
 func formatDateTime(t time.Time) string {

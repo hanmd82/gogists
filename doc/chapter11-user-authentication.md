@@ -53,3 +53,4 @@ User flows:
 - Signup
 - Login
 - Logout
+- User Authorization
