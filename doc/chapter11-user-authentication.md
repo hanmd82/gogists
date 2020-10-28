@@ -46,3 +46,10 @@ Grant access to `users` table
 GRANT SELECT,INSERT,UPDATE ON users TO web;
 GRANT USAGE, SELECT ON SEQUENCE users_id_seq TO web;
 ```
+
+---
+
+User flows:
+- Signup
+- Login
+- Logout
