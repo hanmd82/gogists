@@ -20,7 +20,11 @@ type templateData struct {
 }
 
 func formatDateTime(t time.Time) string {
-	return t.Format(time.RFC822)
+	if t.IsZero() {
+		return ""
+	}
+
+	return t.UTC().Format(time.RFC822)
 }
 
 var functions = template.FuncMap{

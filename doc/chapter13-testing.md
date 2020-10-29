@@ -14,4 +14,4 @@ Goals:
 - Unit tests are contained in a normal Go function with the signature `func(*testing.T)`
 - To be a valid unit test, the name of this function must begin with the word `Test`
 - Use the `t.Errorf()` function to mark a test as failed and log a descriptive message about the failure
-
+- Table-Driven Tests: define test cases in a slice of anonymous structs

@@ -6,10 +6,34 @@ import (
 )
 
 func TestFormatDateTime(t *testing.T) {
-	tm := time.Date(2020, 12, 17, 10, 0, 0, 0, time.UTC)
-	fdt := formatDateTime(tm)
+	tests := []struct {
+		name string
+		tm   time.Time
+		want string
+	}{
+		{
+			name: "UTC",
+			tm:   time.Date(2020, 12, 17, 10, 0, 0, 0, time.UTC),
+			want: "17 Dec 20 10:00 UTC",
+		},
+		{
+			name: "Empty",
+			tm:   time.Time{},
+			want: "",
+		},
+		{
+			name: "CET",
+			tm:   time.Date(2020, 12, 17, 10, 0, 0, 0, time.FixedZone("CET", 1*60*60)),
+			want: "17 Dec 20 09:00 UTC",
+		},
+	}
 
-	if fdt != "17 Dec 20 10:00 UTC" {
-		t.Errorf("want %q; got %q", "17 Dec 20 10:00 UTC", fdt)
+	for _, tt := range tests {
+		t.Run(tt.name, func(*testing.T) {
+			fdt := formatDateTime(tt.tm)
+			if fdt != tt.want {
+				t.Errorf("want %q; got %q", tt.want, fdt)
+			}
+		})
 	}
 }
