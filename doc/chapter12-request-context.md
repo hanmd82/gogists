@@ -32,3 +32,17 @@
         return errors.New("could not convert value to bool")
     }
     ```
+---
+
+### Request Context for Authentication/Authorization
+- Create a unique key to store and retrieve user details from request context
+- Create a new `authenticate()` middleware function which
+  - fetches the user's ID from session data
+  - checks the database to see if the ID is valid and for an active user
+  - then updates the request context to include this information
+- Update `isAuthenticated()` helper function so that instead of checking the session data, it now checks the request context to determine if a user is authenticated or not
+
+---
+
+Misusing Request Context
+- Request context should only be used to store information relevant to the lifetime of a specific request

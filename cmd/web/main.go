@@ -25,6 +25,10 @@ const (
 	dbname   = "gogists"
 )
 
+type contextKey string
+
+const contextKeyIsAuthenticated = contextKey("isAuthenticated")
+
 // application struct holds the application-wide dependencies
 type application struct {
 	errorLog      *log.Logger
