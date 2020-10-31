@@ -17,3 +17,4 @@ Goals:
 - Table-Driven Tests: define test cases in a slice of anonymous structs
 - `net/http/httptest` package contains the `httptest.ResponseRecorder` type, which is an implementation of `http.ResponseWriter` which records the response status code, headers and body instead of actually writing them to a HTTP connection
 - To unit test HTTP handlers, create a new `httptest.ResponseRecorder` object, pass it to the handler function, and then examine it again after the handler returns
+- One way to test HTTP middleware functions is to create a mock HTTP handler to pass to middleware function, then call `ServeHTTP()` and get the response in `ResponseRecorder`
