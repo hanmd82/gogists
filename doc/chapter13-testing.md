@@ -10,6 +10,7 @@ Goals:
 - Calculate and profile test code coverage
 
 ---
+### Unit Testing
 
 - Unit tests are contained in a normal Go function with the signature `func(*testing.T)`
 - To be a valid unit test, the name of this function must begin with the word `Test`
@@ -18,3 +19,6 @@ Goals:
 - `net/http/httptest` package contains the `httptest.ResponseRecorder` type, which is an implementation of `http.ResponseWriter` which records the response status code, headers and body instead of actually writing them to a HTTP connection
 - To unit test HTTP handlers, create a new `httptest.ResponseRecorder` object, pass it to the handler function, and then examine it again after the handler returns
 - One way to test HTTP middleware functions is to create a mock HTTP handler to pass to middleware function, then call `ServeHTTP()` and get the response in `ResponseRecorder`
+- Run specific tests by using the `-run` flag, passing in a regular expression for matching with test names
+- Tests can be configured to run in parallel by calling the `t.Parallel()` function at the start of the test code
+- Enable Go's race detector by running with the `-race` flag
