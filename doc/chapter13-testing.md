@@ -33,3 +33,4 @@ Goals:
 ### Mocking Dependencies
 
 - Test the behavior of handlers without needing to setup test database
+- Use interfaces, which are satisfied by both the mocks and production database models

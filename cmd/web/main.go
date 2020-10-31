@@ -11,9 +11,9 @@ import (
 	"os"
 	"time"
 
-	"github.com/hanmd82/gogists/pkg/models/postgres"
-
 	"github.com/golangcollege/sessions"
+	"github.com/hanmd82/gogists/pkg/models"
+	"github.com/hanmd82/gogists/pkg/models/postgres"
 	_ "github.com/lib/pq"
 )
 
@@ -31,12 +31,20 @@ const contextKeyIsAuthenticated = contextKey("isAuthenticated")
 
 // application struct holds the application-wide dependencies
 type application struct {
-	errorLog      *log.Logger
-	infoLog       *log.Logger
-	session       *sessions.Session
-	gists         *postgres.GistModel
+	errorLog *log.Logger
+	infoLog  *log.Logger
+	session  *sessions.Session
+	gists    interface {
+		Insert(string, string, string) (int, error)
+		Get(int) (*models.Gist, error)
+		Latest() ([]*models.Gist, error)
+	}
 	templateCache map[string]*template.Template
-	users         *postgres.UserModel
+	users         interface {
+		Insert(string, string, string) (int, error)
+		Authenticate(string, string) (int, error)
+		Get(int) (*models.User, error)
+	}
 }
 
 func main() {
