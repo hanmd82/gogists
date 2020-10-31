@@ -28,3 +28,8 @@ Goals:
 
 - The `httptest.NewTLSServer()` function spins up a `httptest.Server` instance that can accept HTTPS requests for end-to-end testing
   - it accepts a `http.Handler` as the argument, and this handler gets called each time the test server receives a HTTPS request
+
+---
+### Mocking Dependencies
+
+- Test the behavior of handlers without needing to setup test database
