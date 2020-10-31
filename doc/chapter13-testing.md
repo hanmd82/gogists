@@ -22,3 +22,9 @@ Goals:
 - Run specific tests by using the `-run` flag, passing in a regular expression for matching with test names
 - Tests can be configured to run in parallel by calling the `t.Parallel()` function at the start of the test code
 - Enable Go's race detector by running with the `-race` flag
+
+---
+### End-To-End Testing
+
+- The `httptest.NewTLSServer()` function spins up a `httptest.Server` instance that can accept HTTPS requests for end-to-end testing
+  - it accepts a `http.Handler` as the argument, and this handler gets called each time the test server receives a HTTPS request
