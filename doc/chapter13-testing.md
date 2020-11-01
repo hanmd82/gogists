@@ -44,3 +44,20 @@ Any request made to `POST /user/signup` will always receive a `400 Bad Request` 
 1. Make a `GET /user/signup` request. This will return a response which contains a CSRF cookie in the response headers and a CSRF token in the HTML response body
 2. Extract the CSRF token from the HTML response body
 3. Make a `POST /user/signup` request, using the same `http.Client` in step 1 (so it automatically passes the CSRF cookie with the POST request) and including the CSRF token alongside the other POST data to be tested
+
+---
+
+### Integration Testing
+
+Goal: Setup an integration test to ensure that `postgres.UserModel.Get()` method is working correctly
+
+Create a test version of database:
+```sql
+CREATE DATABASE test_gogists ENCODING UTF8;
+CREATE USER "test_web" WITH PASSWORD '****';
+GRANT ALL PRIVILEGES ON DATABASE test_gogists to "test_web";
+```
+
+Create two DB scripts:
+1. A `setup` script to create the database tables to mimic production database, and insert a known set of seed data
+2. A `teardown` script to drop the database tables and any data
