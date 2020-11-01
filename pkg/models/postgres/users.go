@@ -76,6 +76,8 @@ func (m *UserModel) Get(id int) (*models.User, error) {
 
 	user := &models.User{}
 	err := row.Scan(&user.ID, &user.Name, &user.Email, &user.CreatedAt, &user.Active)
+	user.CreatedAt = user.CreatedAt.UTC()
+
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			return nil, models.ErrNoRecord
