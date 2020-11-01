@@ -34,3 +34,13 @@ Goals:
 
 - Test the behavior of handlers without needing to setup test database
 - Use interfaces, which are satisfied by both the mocks and production database models
+
+---
+### Testing HTML Forms
+
+Goal: Add an end-to-end test for the `POST /user/signup` route, which is handled by `signupUser` handler.
+
+Any request made to `POST /user/signup` will always receive a `400 Bad Request` response unless the request contains a valid CSRF token and cookie.
+1. Make a `GET /user/signup` request. This will return a response which contains a CSRF cookie in the response headers and a CSRF token in the HTML response body
+2. Extract the CSRF token from the HTML response body
+3. Make a `POST /user/signup` request, using the same `http.Client` in step 1 (so it automatically passes the CSRF cookie with the POST request) and including the CSRF token alongside the other POST data to be tested

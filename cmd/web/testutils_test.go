@@ -1,17 +1,31 @@
 package main
 
 import (
+	"html"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"net/http/cookiejar"
 	"net/http/httptest"
+	"net/url"
+	"regexp"
 	"testing"
 	"time"
 
 	"github.com/golangcollege/sessions"
 	"github.com/hanmd82/gogists/pkg/models/mock"
 )
+
+var csrfTokenRgx = regexp.MustCompile(`<input type='hidden' name='csrf_token' value='(.+)'>`)
+
+func extractCSRFToken(t *testing.T, body []byte) string {
+	matches := csrfTokenRgx.FindSubmatch(body)
+	if len(matches) < 2 {
+		t.Fatal("no CSRF token found in response body")
+	}
+
+	return html.UnescapeString(string(matches[1]))
+}
 
 func newTestApplication(t *testing.T) *application {
 	templateCache, err := newTemplateCache("./../../ui/html")
@@ -55,6 +69,22 @@ func newTestServer(t *testing.T, h http.Handler) *testServer {
 
 func (ts *testServer) get(t *testing.T, urlPath string) (int, http.Header, []byte) {
 	res, err := ts.Client().Get(ts.URL + urlPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	defer res.Body.Close()
+
+	body, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	return res.StatusCode, res.Header, body
+}
+
+func (ts *testServer) postForm(t *testing.T, urlPath string, form url.Values) (int, http.Header, []byte) {
+	res, err := ts.Client().PostForm(ts.URL+urlPath, form)
 	if err != nil {
 		t.Fatal(err)
 	}
