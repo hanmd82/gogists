@@ -61,3 +61,8 @@ GRANT ALL PRIVILEGES ON DATABASE test_gogists to "test_web";
 Create two DB scripts:
 1. A `setup` script to create the database tables to mimic production database, and insert a known set of seed data
 2. A `teardown` script to drop the database tables and any data
+
+Add a `newTestDB` helper function which can:
+- Create a new `*sql.DB` connection pool for the test database
+- Execute the `setup.sql` script to create the database tables and dummy data
+- Return an anonymous function which executes the `teardown.sql` script and closes the connection pool
