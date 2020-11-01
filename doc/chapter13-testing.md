@@ -46,7 +46,6 @@ Any request made to `POST /user/signup` will always receive a `400 Bad Request` 
 3. Make a `POST /user/signup` request, using the same `http.Client` in step 1 (so it automatically passes the CSRF cookie with the POST request) and including the CSRF token alongside the other POST data to be tested
 
 ---
-
 ### Integration Testing
 
 Goal: Setup an integration test to ensure that `postgres.UserModel.Get()` method is working correctly
@@ -66,3 +65,16 @@ Add a `newTestDB` helper function which can:
 - Create a new `*sql.DB` connection pool for the test database
 - Execute the `setup.sql` script to create the database tables and dummy data
 - Return an anonymous function which executes the `teardown.sql` script and closes the connection pool
+
+---
+### Profiling Test Coverage
+
+`go test` provides metrics and visualizations for test coverage
+- use the `-cover` flag to show test coverage, e.g. `go test -cover ./...`
+- use the `-coverprofile=${tmpfilename}` option to get a more detailed breakdown of test coverage by method and function
+  - view the coverage profile by running `go tool cover -html=${tmpfilename}`
+  - add the `-covermode=count` option to show test coverage gradients
+  ```bash
+  go test -covermode=count -coverprofile=/tmp/profile.out ./...
+  go tool cover -html=/tmp/profile.out
+  ```
